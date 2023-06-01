@@ -10,6 +10,10 @@ while(tryCount > 0)
     if(userPassword === pass) 
     {
         console.log(`Welcome! \n Balance: ${userBalance}`);
+       var choice =  prompt("Choose 1(Cash) or 2(Loan payment)...");
+       if( choice == 1)
+       {
+
         while(userBalance > 0)
         {
             var amount = Number(prompt("Amount: "));
@@ -27,10 +31,6 @@ while(tryCount > 0)
         }
         
      }
-
-
-
-
      if( userBalance == 0) 
      {
         if(!hasCredit) 
@@ -67,6 +67,30 @@ while(tryCount > 0)
             }
      
         }
+       }
+ 
+       if(choice == 2) 
+       {
+        if(!hasCredit)
+        {
+          if( confirm("You don't have a credit to pay. Do you want to take a credit?"))
+          {
+            var givenAmount = userSalary * 0.45 * 12;
+                        userBalance +=Math.floor(givenAmount - givenAmount * 0.02);
+                        console.log(`Credit transaction is done successfully. \n Balance: ${userBalance}`);
+                        hasCredit = true;
+                        continue;
+          }
+
+        }
+        if(hasCredit)
+        {
+            var loanPayment =  userSalary * 0.45;
+            userBalance -= loanPayment;
+            console.log(`Loan payment:${loanPayment} \nBalance:${userBalance} `);
+            break;
+        }
+       }
      
     }
     else 
