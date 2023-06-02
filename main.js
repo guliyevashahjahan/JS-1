@@ -4,6 +4,7 @@ var isContinue = true;
 var hasCredit = false;
 var userPassword = prompt("Set a new password: ");
 var userSalary = prompt("Enter amount of your salary: ")
+var givenAmount = userSalary * 0.45 * 12;
 while(tryCount > 0) 
 {
     var pass = prompt("Enter the password: ");
@@ -46,11 +47,12 @@ while(tryCount > 0)
             } 
         }
        
-        console.log("See u next month...");
+        console.log("Balance is over.See u next month...");
         break;
      }
             }
-            else
+            
+            else if (amount > userBalance)
             {
                 if(!hasCredit) 
                 {
@@ -64,6 +66,11 @@ while(tryCount > 0)
                         continue;
                     } 
                 }
+                if(hasCredit)
+                {
+                    console.log("Balance is not enough. You've already taken out a loan.");
+                    break;
+                }
             }
      
         }
@@ -75,7 +82,7 @@ while(tryCount > 0)
         {
           if( confirm("You don't have a credit to pay. Do you want to take a credit?"))
           {
-            var givenAmount = userSalary * 0.45 * 12;
+            
                         userBalance +=Math.floor(givenAmount - givenAmount * 0.02);
                         console.log(`Credit transaction is done successfully. \n Balance: ${userBalance}`);
                         hasCredit = true;
@@ -85,10 +92,41 @@ while(tryCount > 0)
         }
         if(hasCredit)
         {
+            while(givenAmount > 0)
+            {
             var loanPayment =  userSalary * 0.45;
+            if(loanPayment <= userBalance)
+            {
+                userBalance -= loanPayment;
+                givenAmount -= loanPayment;
+            console.log(`Loan payment:${loanPayment} \nBalance:${userBalance} \nUnpaid dept:${givenAmount} `);
+            }
+            if(loanPayment > userBalance)
+            {
+               givenAmount = givenAmount - userBalance;
+               userBalance = 0;
+                console.error(`Balance is over. Unpaid dept: ${givenAmount}`);
+                break;
+            }
+
+            isContinue = confirm("Do you want to continue?");
+            if(isContinue)
+            {
+                var loanPayment =  userSalary * 0.45;
             userBalance -= loanPayment;
-            console.log(`Loan payment:${loanPayment} \nBalance:${userBalance} `);
-            break;
+            givenAmount -= loanPayment;
+            console.log(`Loan payment:${loanPayment} \nBalance:${userBalance} \nUnpaid dept:${givenAmount}`);
+            }
+            if(givenAmount ==0)
+            {
+                hasCredit = false;
+            }
+            if(!isContinue)
+            {
+                console.log("Thanks for choosing us.");
+                break;
+            }
+        }
         }
        }
      
