@@ -21,12 +21,14 @@ while(tryCount > 0)
             if(amount <= userBalance) 
             {
      userBalance -= amount;
+     var dateMoneyWithdrawal = Date();
      console.log(`Amount withdrawn: ${amount} \n Balance: ${userBalance}`);
      if(userBalance > 0)
      {
         isContinue = confirm("Do you want to continue? ")
         if(!isContinue)
         {
+            document.write(`Amount: ${amount}  Date: ${dateMoneyWithdrawal}  MONEY WITHDRAWAL`);
             console.log("Thanks for choosing us!")
             break;
         }
@@ -115,6 +117,7 @@ while(tryCount > 0)
                 var loanPayment =  userSalary * 0.45;
             userBalance -= loanPayment;
             givenAmount -= loanPayment;
+            var dateLoanPayment = Date();
             console.log(`Loan payment:${loanPayment} \nBalance:${userBalance} \nUnpaid dept:${givenAmount}`);
             }
             if(givenAmount ==0)
@@ -123,6 +126,7 @@ while(tryCount > 0)
             }
             if(!isContinue)
             {
+                document.write(`Amount: ${loanPayment}  Date: ${dateLoanPayment}  Loan Payment`);
                 console.log("Thanks for choosing us.");
                 break;
             }
