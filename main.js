@@ -2,6 +2,7 @@ var tryCount =3;
 var userBalance = 1000;
 var isContinue = true;
 var hasCredit = false;
+var transactions = [];
 var userPassword = prompt("Set a new password: ");
 var userSalary = prompt("Enter amount of your salary: ")
 var givenAmount = userSalary * 0.45 * 12;
@@ -21,14 +22,19 @@ while(tryCount > 0)
             if(amount <= userBalance) 
             {
      userBalance -= amount;
-     var dateMoneyWithdrawal = Date();
+     transactions.push(`Amount: ${amount},      ${Date()},     "MONEY WITHDRAWAL"`)
      console.log(`Amount withdrawn: ${amount} \n Balance: ${userBalance}`);
      if(userBalance > 0)
      {
         isContinue = confirm("Do you want to continue? ")
         if(!isContinue)
+        
         {
-            document.write(`Amount: ${amount}  Date: ${dateMoneyWithdrawal}  MONEY WITHDRAWAL`);
+            transactions.forEach(element => {
+                document.write(element);
+                document.write("<br/>");
+            });
+            
             console.log("Thanks for choosing us!")
             break;
         }
@@ -43,12 +49,16 @@ while(tryCount > 0)
             {
                 var givenAmount = userSalary * 0.45 * 12;
                 userBalance +=Math.floor(givenAmount - givenAmount * 0.02);
+                transactions.push(`Amount: ${givenAmount},   ${Date()},    "LOAN TAKEN" `)
                 console.log(`Credit transaction is done successfully. \n Balance: ${userBalance}`);
                 hasCredit = true;
                 continue;
             } 
         }
-       
+        transactions.forEach(element => {
+            document.write(element);
+            document.write("<br/>");
+        });
         console.log("Balance is over.See u next month...");
         break;
      }
@@ -63,6 +73,7 @@ while(tryCount > 0)
                     {
                         var givenAmount = userSalary * 0.45 * 12;
                         userBalance +=Math.floor(givenAmount - givenAmount * 0.02);
+                        transactions.push(`Amount: ${givenAmount},        ${Date()},      "LOAN TAKEN"`);
                         console.log(`Credit transaction is done successfully. \n Balance: ${userBalance}`);
                         hasCredit = true;
                         continue;
@@ -70,6 +81,10 @@ while(tryCount > 0)
                 }
                 if(hasCredit)
                 {
+                    transactions.forEach(element => {
+                        document.write(element);
+                        document.write("<br/>");
+                    });
                     console.log("Balance is not enough. You've already taken out a loan.");
                     break;
                 }
@@ -86,6 +101,7 @@ while(tryCount > 0)
           {
             
                         userBalance +=Math.floor(givenAmount - givenAmount * 0.02);
+                        transactions.push(`Amount: ${givenAmount},       ${Date()},      "LOAN TAKEN"`);
                         console.log(`Credit transaction is done successfully. \n Balance: ${userBalance}`);
                         hasCredit = true;
                         continue;
@@ -94,39 +110,39 @@ while(tryCount > 0)
         }
         if(hasCredit)
         {
-            while(givenAmount > 0)
+            while(givenAmount > 0 || isContinue)
             {
             var loanPayment =  userSalary * 0.45;
             if(loanPayment <= userBalance)
             {
                 userBalance -= loanPayment;
                 givenAmount -= loanPayment;
+                transactions.push(`Amount: ${loanPayment},      ${Date()},      "LOAN PAYMENT" `);
             console.log(`Loan payment:${loanPayment} \nBalance:${userBalance} \nUnpaid dept:${givenAmount} `);
             }
             if(loanPayment > userBalance)
             {
-               givenAmount = givenAmount - userBalance;
-               userBalance = 0;
-                console.error(`Balance is over. Unpaid dept: ${givenAmount}`);
+                transactions.forEach(element => {
+                    document.write(element);
+                    document.write("<br/>");
+                });
+                console.error(`Balance is not enough. Unpaid dept: ${givenAmount}`);
                 break;
             }
 
-            isContinue = confirm("Do you want to continue?");
-            if(isContinue)
-            {
-                var loanPayment =  userSalary * 0.45;
-            userBalance -= loanPayment;
-            givenAmount -= loanPayment;
-            var dateLoanPayment = Date();
-            console.log(`Loan payment:${loanPayment} \nBalance:${userBalance} \nUnpaid dept:${givenAmount}`);
-            }
+           isContinue = confirm("Do you want to continue?");
+          
             if(givenAmount ==0)
             {
                 hasCredit = false;
             }
             if(!isContinue)
             {
-                document.write(`Amount: ${loanPayment}  Date: ${dateLoanPayment}  Loan Payment`);
+                transactions.forEach(element => {
+                    document.write(element);
+                    document.write("<br/>");
+
+                });
                 console.log("Thanks for choosing us.");
                 break;
             }
